@@ -12,30 +12,21 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(EXE_NAME "appModular")
-set(LIB_NAME "modular")
+set(TODO_LIST "todo")
+set(TIMER "timer")
+set(NOTE "note")
+set(CALCULATOR "calculator")
 
-qt_add_executable(${EXE_NAME}
-    ./src/app/main.cpp
-)
+add_subdirectory(services/)
+add_subdirectory(modules/)
+add_subdirectory(app/)
 
-add_subdirectory(src)
-add_subdirectory(qml)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 set_target_properties(${EXE_NAME} PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.${EXE_NAME}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
-)
-
-target_link_libraries(${EXE_NAME}
-    PRIVATE 
-    Qt6::Quick
-    ${LIB_NAME}
 )
 
 include(GNUInstallDirs)

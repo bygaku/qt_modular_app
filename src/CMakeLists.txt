@@ -1,11 +1,7 @@
-cmake_minimum_required(VERSION 3.16)
-
 # wild card.
 file(GLOB_RECURSE LIB_SRC CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/core/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/module/audio/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/module/clicker/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/module/timer/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/module/**/*.cpp"
 )
 
 qt_add_library(${LIB_NAME}
@@ -15,5 +11,10 @@ qt_add_library(${LIB_NAME}
 
 target_include_directories(${LIB_NAME}
     PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(${LIB_NAME}
+    PRIVATE
+    Qt6::Quick
 )
