@@ -35,7 +35,9 @@ void TimerModule::setInterval(const uint32_t& ms) {
     emit intervalChanged();
 }
 
-int TimerModule::currentTime() const {
+case CountDown:
+          if (!target_time_.isValid()) return target_duration_;
+          return qMax(0, target_time_.msecsTo(QTime::currentTime()));
     switch (mode_) {
     case CountUp:
         return elapsed_.elapsed();
