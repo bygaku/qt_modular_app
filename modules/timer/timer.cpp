@@ -44,6 +44,8 @@ int TimerModule::currentTime() const {
     case Pomodoro:
         if (!target_time_.isValid()) return 0;
         return qMax(0, target_time_.msecsTo(QTime::currentTime()));
+    default:
+        return 0;
     }
 }
 
