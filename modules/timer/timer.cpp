@@ -35,14 +35,13 @@ void TimerModule::setInterval(const uint32_t& ms) {
     emit intervalChanged();
 }
 
-case CountDown:
-          if (!target_time_.isValid()) return target_duration_;
-          return qMax(0, target_time_.msecsTo(QTime::currentTime()));
+int TimerModule::currentTime() const {
     switch (mode_) {
     case CountUp:
         return elapsed_.elapsed();
     case CountDown:
-        return 0;
+        if (!target_time_.isValid()) return target_duration_;
+        return qMax(0, target_time_.msecsTo(QTime::currentTime()));
     case Pomodoro:
         if (!target_time_.isValid()) return 0;
         return qMax(0, target_time_.msecsTo(QTime::currentTime()));
