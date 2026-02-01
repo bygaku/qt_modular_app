@@ -5,9 +5,4 @@
 #### - Pomodoro
 #### - Count Up/Down Timer
 
-### Audio Player
-#### - Background
-#### - Loop / Shuffle
-
-### Clicker
-#### - Mini game
+### Todo
