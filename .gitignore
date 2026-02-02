@@ -57,3 +57,4 @@ compile_commands.json
 [Dd]ebug/
 [Rr]elease/
 [Bb]in/
+.idea/
