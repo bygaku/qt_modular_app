@@ -24,18 +24,12 @@ Item {
         return currentWin;
     }
 
-    function toggleTimer() {
+    function minimizedTimer() {
         timerWin = getModuleWindow(timerWin, "PomodoroWindow.qml");
         if (!timerWin) return;
 
-        timerWin.visible = !timerWin.visible;
-        if (timerWin.visible) {
-            timerWin.raise();
-            timerWin.requestActivate();
-
-            console.log("visible == true")
-            return;
-        } else {
+        timerWin.visible = false;
+        if (!timerWin.visible) {
             timerWin.hide();
 
             console.log("visible == false")
@@ -56,6 +50,10 @@ Item {
         }
     }
 
+    function showNotification(title, message) {
+        tray.showMessage(title, message, SystemTrayIcon.Information, 5000);
+    }
+
     SystemTrayIcon {
         id: tray
         visible: true
@@ -67,9 +65,12 @@ Item {
                 onTriggered: root.showTimer()
             }
 
+            MenuSeparator {
+            }
+
             MenuItem {
                 text: qsTr("すべてのモジュールを最小化");
-                onTriggered: root.toggleTimer()
+                onTriggered: root.minimizedTimer()
             }
 
             MenuItem {
