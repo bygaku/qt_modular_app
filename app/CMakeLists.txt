@@ -19,4 +19,5 @@ qt_add_qml_module(${EXE_NAME}
         ./qml/MainWindow.qml
     RESOURCES
         resources/resources.qrc
+        QML_FILES qml/PomodoroWindow.qml
 )

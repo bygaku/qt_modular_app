@@ -3,37 +3,73 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.1
 
-import TimerModule 1.0
+import Pomodoro 1.0
 
 // Window: Main(Transparent).
-Window {
+Item {
     id: root
-    visible: true
 
-    title: qsTr("Widget Launcher")
-    color: "yellow"
-    width: 300; height: 200
-    x: Screen.width - width - 50; y: Screen.height - height - 50
+    property Window timerWin: null
 
-    flags: Qt.FramelessWindowHint   |
-           Qt.WindowStaysOnTopHint  |
-           Qt.WindowTransparentForInput
+    function getModuleWindow(currentWin, qmlFile) {
+        if (!currentWin) {
+            var component = Qt.createComponent(qmlFile);
+            if (component.status === Component.Ready) {
+                return component.createObject();
+            }
+            console.error("Error loading " + qmlFile + ":", component.errorString());
+            return null;
+        }
+
+        return currentWin;
+    }
+
+    function toggleTimer() {
+        timerWin = getModuleWindow(timerWin, "PomodoroWindow.qml");
+        if (!timerWin) return;
+
+        timerWin.visible = !timerWin.visible;
+        if (timerWin.visible) {
+            timerWin.raise();
+            timerWin.requestActivate();
+
+            console.log("visible == true")
+            return;
+        } else {
+            timerWin.hide();
+
+            console.log("visible == false")
+            return;
+        }
+    }
+
+    function showTimer() {
+        timerWin = getModuleWindow(timerWin, "PomodoroWindow.qml");
+        if (!timerWin) return;
+
+        if (!timerWin.visible) {
+            timerWin.visible = true;
+            timerWin.raise();
+            timerWin.requestActivate();
+
+            console.log("visible == true")
+        }
+    }
 
     SystemTrayIcon {
         id: tray
         visible: true
         icon.source: "qrc:/images/icon.png"
 
-        onActivated: {
-            root.showNormal()
-            root.raise()
-            root.requestActivate()
-        }
-
         menu: Menu {
             MenuItem {
+                text: qsTr("Pomodoroを起動")
+                onTriggered: root.showTimer()
+            }
+
+            MenuItem {
                 text: qsTr("すべてのモジュールを最小化");
-                onTriggered: root.showMinimized()
+                onTriggered: root.toggleTimer()
             }
 
             MenuItem {
