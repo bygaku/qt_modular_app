@@ -2,35 +2,25 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QQmlContext>
-#include "timer.h"
+#include "pomodoro_timer.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     // @uri TimerModule
-    qmlRegisterType<TimerModule>("TimerModule", 1, 0, "TimerModule");
+    qmlRegisterType<PomodoroTimer>("Pomodoro", 1, 0, "Pomodoro");
 
-    // Main: Widgets Manage.
-    QQmlApplicationEngine main;
+    QQmlApplicationEngine engine;
+    const QUrl url("qrc:/qt/qml/Modular/MainWindow.qml");
+
     QObject::connect(
-        &main,
+        &engine,
         &QQmlApplicationEngine::objectCreationFailed,
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    main.loadFromModule("Modular", "MainWindow");
-
-    if(!main.rootObjects().isEmpty()) {
-        QObject *root = main.rootObjects().at(0);
-        auto window = qobject_cast<QQuickWindow*>(root);
-        if (window) {
-            Qt::WindowFlags flags = window->flags();
-            window->setFlags(flags);
-
-            window->show();
-        }
-    }
+    engine.loadFromModule("Modular", "MainWindow");
 
     return app.exec();
 }

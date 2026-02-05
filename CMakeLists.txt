@@ -14,8 +14,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-option(BUILD_TESTS "Build the test suite." ON)
-option(BUILD_APP "Build the main application." OFF)
+option(BUILD_TESTS "Build the test suite." OFF)
+option(BUILD_APP "Build the main application." ON)
 
 set(EXE_NAME "appModular")
 set(TEST_NAME "appTest")
