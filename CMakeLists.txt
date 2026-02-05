@@ -5,6 +5,8 @@ project(Modular VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_PREFIX_PATH "C:/DevTools/Qt/6.8.3/msvc2022_64")
+
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -12,7 +14,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-option(TEST "Test Mode." OFF)
+option(BUILD_TESTS "Build the test suite." ON)
+option(BUILD_APP "Build the main application." OFF)
+
 set(EXE_NAME "appModular")
 set(TEST_NAME "appTest")
 set(TODO "todo")
@@ -24,9 +28,11 @@ set(SERIAL "serialize")
 add_subdirectory(services/)
 add_subdirectory(modules/)
 
-if(${TEST})
+if(BUILD_TESTS)
     add_subdirectory(test/)
-else()
+endif()
+
+if(BUILD_APP)
     add_subdirectory(app/)
 
     set_target_properties(${EXE_NAME} PROPERTIES
