@@ -1,0 +1,27 @@
+# test
+add_executable(${TEST_NAME}
+    ./test_serialize.cpp
+    ./user_data.h
+)
+
+# link library to test file.
+target_link_libraries(${TEST_NAME}
+    PRIVATE
+    Qt6::Quick
+    ${SERIAL}
+)
+
+set_target_properties(${TEST_NAME} PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.${EXE_NAME}
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+)
+
+include(GNUInstallDirs)
+install(TARGETS ${TEST_NAME}
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
